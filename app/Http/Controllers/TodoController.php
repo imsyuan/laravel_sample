@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Todo;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
@@ -13,7 +14,7 @@ class TodoController extends Controller
      */
     public function index()
     {
-        //
+        return Todo::all();
     }
 
     /**
@@ -34,7 +35,13 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->validate([
+            'title'     => 'required|string',
+            'completed' =>  'required|boolean',
+        ]);
+
+        $todo = Todo::create($data);
+        return response($todo, 201);
     }
 
     /**
@@ -62,23 +69,32 @@ class TodoController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param Todo $todo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Todo $todo)
     {
-        //
+        $data = $request->validate([
+            'title'     => 'required|string',
+            'completed' =>  'required|boolean',
+        ]);
+
+        $todo->update($data);
+
+        return response($todo, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Todo $todo
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Todo $todo)
     {
-        //
+        $todo->delete();
+        return response('Delete todo item', 200);
     }
 }
