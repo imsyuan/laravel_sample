@@ -17,4 +17,28 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::prefix('admin')->group(function () {
+    Route::get('users', function () {
+        return "this is /admin/users";
 
+    });
+    Route::get('users2', function () {
+        return "this is /admin/users2";
+    });
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
